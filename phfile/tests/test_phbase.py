@@ -22,7 +22,7 @@ document = {
 }
 
 
-class TestPhotometry(unittest.TestCase):
+class TestPHBase(unittest.TestCase):
     """."""
 
     def setUp(self):
