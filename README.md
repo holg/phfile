@@ -16,7 +16,7 @@ Simply download master branch, unpack, go into created directory and install usi
 $ pip install .
 ```
 
-###Testing
+### Testing
 
 Just run:
 
