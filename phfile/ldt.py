@@ -39,6 +39,15 @@ class LDT(PHBase, object):
         super().__init__()
         self.schema = ldt_schema
 
+    def _handle_number_of_lamps(self, num):
+        lamps = []
+        for lamp in self.document.get('lamps', []):
+            lamp.update({'number_of': num,
+                         'total_flux': lamp['total_flux'] * num,
+                         'total_power': lamp['total_power'] * num, })
+            lamps.append(lamp)
+        self.validate({'lamps': lamps}, update=True)
+
     @property
     def text(self):
         """Return content of ldt file.
