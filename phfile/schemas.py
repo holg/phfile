@@ -15,6 +15,11 @@ def _to_int(val):
     return int(result[0]) if result else 0
 
 
+def _to_float(val):
+    """changed the schema, as many eulmdats have the , instead of the ."""
+    return float(val.replace(',', '.'))
+
+
 _ldt_lamp_schema = {
     'number_of': {
         'coerce': int,
@@ -65,10 +70,10 @@ ldt_schema = {
         'required': True,
         'type': 'integer',
     },
-    'symmetry_indicator': {  # 3
+    'symmetry_indicator': { #3 0-4
         'coerce': int,
         'max': 4,
-        'min': 1,
+        'min': 0,   #  0 is as well alowed meaning no symmetry
         'required': True,
         'type': 'integer',
     },
@@ -160,7 +165,7 @@ ldt_schema = {
         'required': True,
         'type': 'float',
     },
-    'dff': {  # 22
+    'dff': {  # 22 DFF - Downward flux fraction (%)
         'coerce': float,
         'default': 100,
         'max': 100,
@@ -168,28 +173,28 @@ ldt_schema = {
         'required': True,
         'type': 'float',
     },
-    'lorl': {  # 23
+    'lorl': {  # 23 LORL - Light output ratio luminaire (%)
         'coerce': float,
         'max': 100,
         'min': 0,
         'required': True,
         'type': 'float',
     },
-    'conversion_factor': {  # 24
+    'conversion_factor': {  # 24 Conversion factor for luminous intensities (depending on measurement)
         'coerce': float,
         'max': 1,
         'min': 0,
         'required': True,
         'type': 'float',
     },
-    'tilt': {  # 25
+    'tilt': {  # 25 Tilt of luminaire during measurement (road lighting luminaires)
         'coerce': float,
         'max': 90,
         'min': 0,
         'required': True,
         'type': 'float',
     },
-    'number_n': {  # 26
+    'number_n': {  # 26 n - Number of standard sets of lamps (optional, also extendable on company-specific basis)For absolute photometry, this value is 1
         'coerce': int,
         'default': 1,
         'type': 'integer',
@@ -215,7 +220,7 @@ ldt_schema = {
     'angles_c': {  # 28
         'required': True,
         'schema': {
-            'coerce': float,
+            'coerce': (str, _to_float),
             'required': True,
             'type': 'float',
         },
@@ -224,7 +229,7 @@ ldt_schema = {
     'angles_g': {  # 29
         'required': True,
         'schema': {
-            'coerce': float,
+            'coerce': (str, _to_float),
             'required': True,
             'type': 'float',
         },
@@ -232,7 +237,7 @@ ldt_schema = {
     'luminous_intensities': {  # 30
         'required': True,
         'schema': {
-            'coerce': float,
+            'coerce': (str, _to_float),
             'required': True,
             'type': 'float',
         },
